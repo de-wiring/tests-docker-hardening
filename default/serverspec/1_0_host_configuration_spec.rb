@@ -44,5 +44,6 @@ describe '1 - Host Configuration', :if => cis_enabled?('1') do
     end
   end
 
+  # audit rules 1.8- go into 1_8_host_audit_configuration_spec.rb
 
 end
