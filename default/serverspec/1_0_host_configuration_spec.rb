@@ -17,13 +17,8 @@ describe '1 - Host Configuration', :if => dh_enabled?('1') do
   end  
 
   describe '1.2 - Use the updated Linux Kernel', :if => dh_enabled?('1.2') do
-    # compare major and minor versions separately
-
-    describe command "test `uname -r | awk -F'.' '{ print $1 }'` -ge 3" do
-      its(:exit_status) { should eq 0 }
-    end
-
-    describe command "test `uname -r | awk -F'.' '{ print $2 }'` -ge 10" do
+    # compare major and minor versions combined in one, 3.10 => 310 and so on
+    describe command "test $(uname -r | awk -F'.' '{ print $1*100+$2 }') -ge 310" do
       its(:exit_status) { should eq 0 }
     end
   end

@@ -92,9 +92,9 @@ describe '2 - Daemon Configuration', :if => dh_enabled?('2') do
   describe '2.10 - Set default ulimits', :if => dh_enabled?('2.10') do
 
     describe process 'docker' do
-      its(:args) { should match /--default-ulimit/ } 
-      #its(:args) { should match /--default-ulimit nproc=/ } 
-      #its(:args) { should match /--default-ulimit nofile=/ } 
+      #its(:args) { should match /--default-ulimit/ } 
+      its(:args) { should match /--default-ulimit nproc=/ } 
+      its(:args) { should match /--default-ulimit nofile=/ } 
     end
 
   end
