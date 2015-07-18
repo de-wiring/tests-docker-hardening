@@ -28,7 +28,7 @@ def dh_init_section_map
       :ca_certificate_file => '',
       :server_certificate_file => '',
       :server_key_file => '',
-    }
+    },
   }
   # set serverspec property
   set_property({ :dh_section_map => section_map })

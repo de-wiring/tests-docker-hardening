@@ -10,7 +10,6 @@ describe '1 - Host Configuration', :if => dh_enabled?('1') do
   describe '1.1 - Create a separate partition for containers', :if => dh_enabled?('1.1') do
   
     describe file( dh_property('1.1',:var_lib_docker_path) ) do
-      it { should exist }
       it { should be_mounted }
     end
 

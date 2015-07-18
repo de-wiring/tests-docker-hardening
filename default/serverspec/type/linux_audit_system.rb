@@ -2,11 +2,15 @@
 
 include Serverspec::Type
 
+# Serverspec module
 module Serverspec
+  # enhance type module
   module Type
+    # LinuxAuditSystem is a resource type to query the linux audit
+    # system via auditctl
     class LinuxAuditSystem < Base
-      def initialize()
-        @name = 'linux_audit_system' 
+      def initialize
+        @name = 'linux_audit_system'
         @runner = Specinfra::Runner
         @rules_content = nil
       end
@@ -20,29 +24,33 @@ module Serverspec
 
       def has_audit_rule?(rule)
         if rule.instance_of?(Regexp)
-          return get_rules.any? { |r| r.match(rule) }
+          return rules.any? { |r| r.match(rule) }
+        else
+          return rules.any? { |r| r == rule }
         end
-        get_rules.any? { |r| r == rule }
       end
 
       def enabled?
-        get_status('enabled') == '1'
+        status_of('enabled') == '1'
       end
 
       def running?
-        pid = get_status('pid') 
-        ( pid != nil && pid.size > 0 && pid != '0' )
+        pid = status_of('pid')
+        (!pid.nil? && pid.size > 0 && pid != '0')
       end
 
-private 
-      def get_rules
+      private
+
+      def rules
         if @rules_content.nil?
-          @rules_content = @runner.run_command('auditctl -l').stdout.split("\n").map { |l| l.chomp }
+          @rules_content = @runner
+                           .run_command('auditctl -l')
+                           .stdout.split("\n").map(&:chomp)
         end
         @rules_content || []
       end
 
-      def get_status(part)
+      def status_of(part)
         cmd = "auditctl -s | grep \"^#{part}\" | awk '{ print $2 }'"
         @runner.run_command(cmd).stdout.chomp
       end
@@ -53,4 +61,3 @@ private
     end
   end
 end
-
