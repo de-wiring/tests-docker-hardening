@@ -24,7 +24,7 @@ Bundler will install rake, serverspec and some dependencies. After that serversp
 Rakefile will scan for all directories in CWD and build a serverspec task for it. The `default` directory can be used right away:
 
 ```bash
-# bundle exec serverspec:default
+# bundle exec rake serverspec:default
 (...)
 ```
 
